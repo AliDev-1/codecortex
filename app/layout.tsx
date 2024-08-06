@@ -34,8 +34,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <h1 className="h1-bold">This is a piece of text</h1>
-      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+      {/* Adding layouts theme to body */}
+      <body className={`${inter.variable} ${spaceGrotesk.variable}`}> 
         <ClerkProvider
           appearance={{
             elements: {
@@ -50,3 +50,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+ 
