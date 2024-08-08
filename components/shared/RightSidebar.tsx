@@ -4,19 +4,19 @@ import Image from "next/image";
 import RenderTag from "./RenderTag";
 
 const hotQuestions = [
-  { _id: 1, title: "How do i use Express as a custom server in NextJS?" },
-  { _id: 2, title: "Cacading Deletes" },
-  { _id: 3, title: "How to perfectly center a div ?" },
-  { _id: 4, title: "Best Practices" },
-  { _id: 5, title: "Redux toolkit" },
+  { _id: "1", title: "How do i use Express as a custom server in NextJS?" },
+  { _id: "2", title: "Cacading Deletes" },
+  { _id: "3", title: "How to perfectly center a div ?" },
+  { _id: "4", title: "Best Practices" },
+  { _id: "5", title: "Redux toolkit" },
 ];
 
 const popularTags = [
-  { _id: 1, name: "javascript", totalQuestions: 5 },
-  { _id: 2, name: "react", totalQuestions: 10 },
-  { _id: 3, name: "nextjs", totalQuestions: 3 },
-  { _id: 4, name: "nodejs", totalQuestions: 7 },
-  { _id: 5, name: "express", totalQuestions: 2 },
+  { _id: "1", name: "javascript", totalQuestions: 5 },
+  { _id: "2", name: "react", totalQuestions: 10 },
+  { _id: "3", name: "nextjs", totalQuestions: 3 },
+  { _id: "4", name: "nodejs", totalQuestions: 7 },
+  { _id: "5", name: "express", totalQuestions: 2 },
 ];
 
 const RightSidebar = () => {
