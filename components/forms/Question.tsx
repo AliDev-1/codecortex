@@ -3,7 +3,7 @@
 // https://ui.shadcn.com/docs/components/form
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -74,6 +74,7 @@ const Question = ({ mongoUserId }: Props) => {
 
   // 3. Handle the keydown event for the tags input field
   const handleInputKeyDown = (
+    // eslint-disable-next-line no-undef
     e: React.KeyboardEvent<HTMLInputElement>,
     field: any
   ) => {
@@ -141,7 +142,7 @@ const Question = ({ mongoUserId }: Props) => {
             </FormItem>
           )}
         />
-        // Explanation of the question
+        {/* Explanation of the question */}
         <FormField
           control={form.control}
           name="explanation"
@@ -197,7 +198,7 @@ const Question = ({ mongoUserId }: Props) => {
             </FormItem>
           )}
         />
-        //Tags for the question
+        {/* Tags for the question */}
         <FormField
           control={form.control}
           name="tags"
@@ -213,7 +214,7 @@ const Question = ({ mongoUserId }: Props) => {
                     placeholder="Add tags..."
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
                   />
-                  //Display tags as badges below the input field
+                  {/* Display tags as badges below the input field */}
                   {field.value.length > 0 && (
                     <div className="flex-start mt-2.5 gap-2.5">
                       {field.value.map((tag: any) => (
