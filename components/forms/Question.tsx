@@ -1,6 +1,6 @@
 "use client";
-//From ShadCN Form documentation on building a form as well as TinyMCE documentation on how to use the editor
-//https://ui.shadcn.com/docs/components/form
+// From ShadCN Form documentation on building a form as well as TinyMCE documentation on how to use the editor
+// https://ui.shadcn.com/docs/components/form
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { set, useForm } from "react-hook-form";
@@ -63,7 +63,7 @@ const Question = ({ mongoUserId }: Props) => {
         author: JSON.parse(mongoUserId),
         path: pathname,
       });
-      //Navigate to home page
+      // Navigate to home page
       router.push("/");
     }
     catch (error) {
@@ -141,7 +141,7 @@ const Question = ({ mongoUserId }: Props) => {
             </FormItem>
           )}
         />
-        //Explanation of the question
+        // Explanation of the question
         <FormField
           control={form.control}
           name="explanation"

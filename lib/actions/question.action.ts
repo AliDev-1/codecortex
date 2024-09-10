@@ -17,7 +17,7 @@ export async function getQuestions(params: GetQuestionsParams) {
         path: "author",
         model: User,
       })
-      .sort({ createdAt: -1 }); //sort by latest
+      .sort({ createdAt: -1 }); // sort by latest
 
     return { questions };
   } catch (error) {
@@ -31,7 +31,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     connectToDatabase();
     const { title, content, tags, author, path } = params;
 
-    //create question
+    // create question
     const question = await Question.create({
       title,
       content,
@@ -40,7 +40,7 @@ export async function createQuestion(params: CreateQuestionParams) {
 
     const tagDocuments = [];
 
-    //create tags or get existing tags
+    // create tags or get existing tags
 
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
@@ -59,11 +59,11 @@ export async function createQuestion(params: CreateQuestionParams) {
       $push: { tags: { $each: tagDocuments } },
     });
 
-    //Create an interaction to track the user's ask question action
+    // Create an interaction to track the user's ask question action
 
-    //Increment author's reputation by 5
+    // Increment author's reputation by 5
 
-    //Increment tag's question count
+    // Increment tag's question count
     revalidatePath(path);
   } catch (error) {
     console.log(error);
