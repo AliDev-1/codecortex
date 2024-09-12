@@ -32,7 +32,7 @@ const QuestionCards = ({
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
             {getTimestamp(createdAt)}
           </span>
-          <Link href={"/question/_id"}>
+          <Link href={`/question/${_id}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
               {title}
             </h3>
@@ -79,7 +79,7 @@ const QuestionCards = ({
         <Metric
           imgUrl="/assets/icons/eye.svg"
           alt="eye"
-          value={formatAndDivideNumber (views)}
+          value={formatAndDivideNumber(views)}
           title="views"
           textStyles="small-medium text-dark400_light800"
           isAuthor={false}
