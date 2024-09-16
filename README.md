@@ -1,6 +1,9 @@
 # CodeCortex
 
-![CodeCortex Logo](./public/assets/images/logo.png)
+<p align="center">
+  <img src="./public/assets/images/logo.png" alt="CodeCortex Logo" />
+</p>
+
 
 ![CodeCortex Preview](./public/assets/images/preview.png)
 
