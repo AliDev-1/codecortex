@@ -4,14 +4,24 @@ import Image from "next/image";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Metric from "@/components/shared/Metric";
 import RenderTag from "@/components/shared/RenderTag";
-
-
-
 import React from 'react'
+import ParseHTML from '@/components/shared/ParseHTML';
+import Answer from '@/components/forms/Answer';
+import { auth } from "@clerk/nextjs/server";
+import { getUserById } from '@/lib/actions/user.action';
+import AllAnswers from '@/components/shared/AllAnswers';
+
 
 const Page = async ({ params, searchParams }: any) => {
     
     const result = await getQuestionById({ questionId: params.id })
+    const { userId: clerkId } = auth();
+    
+    let mongoUser;
+
+    if (clerkId) {
+      mongoUser = await getUserById({ userId: clerkId });
+    }
     
 
   return (
@@ -33,8 +43,7 @@ const Page = async ({ params, searchParams }: any) => {
               {result.author.name}
             </p>
           </Link>
-          <div className="flex justify-end">
-          </div>
+          <div className="flex justify-end"></div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
           {result.title}
@@ -43,36 +52,56 @@ const Page = async ({ params, searchParams }: any) => {
 
       <div className="mb-8 mt-5 flex flex-wrap gap-4">
         <Metric
-                  imgUrl="/assets/icons/clock.svg"
-                  alt="clock icon"
-                  value={` asked ${getTimestamp(result.createdAt)}`}
-                  title=" Asked"
-                  textStyles="small-medium text-dark400_light800" isAuthor={false}        />
+          imgUrl="/assets/icons/clock.svg"
+          alt="clock icon"
+          value={` asked ${getTimestamp(result.createdAt)}`}
+          title=" Asked"
+          textStyles="small-medium text-dark400_light800"
+          isAuthor={false}
+        />
         <Metric
-                  imgUrl="/assets/icons/message.svg"
-                  alt="message"
-                  value={formatAndDivideNumber(result.answers.length)}
-                  title=" Answers"
-                  textStyles="small-medium text-dark400_light800" isAuthor={false}        />
+          imgUrl="/assets/icons/message.svg"
+          alt="message"
+          value={formatAndDivideNumber(result.answers.length)}
+          title=" Answers"
+          textStyles="small-medium text-dark400_light800"
+          isAuthor={false}
+        />
         <Metric
-                  imgUrl="/assets/icons/eye.svg"
-                  alt="eye"
-                  value={formatAndDivideNumber(result.views)}
-                  title=" Views"
-                  textStyles="small-medium text-dark400_light800" isAuthor={false}        />
+          imgUrl="/assets/icons/eye.svg"
+          alt="eye"
+          value={formatAndDivideNumber(result.views)}
+          title=" Views"
+          textStyles="small-medium text-dark400_light800"
+          isAuthor={false}
+        />
       </div>
 
+      <ParseHTML data={result.content} />
 
       <div className="mt-8 flex flex-wrap gap-2">
         {result.tags.map((tag: any) => (
           <RenderTag
-                key={tag._id}
-                _id={tag._id}
-                name={tag.name}
-                showCount={false} totalQuestions={0}          />
+            key={tag._id}
+            _id={tag._id}
+            name={tag.name}
+            showCount={false}
+            totalQuestions={0}
+          />
         ))}
       </div>
 
+      <AllAnswers
+        questionId={result._id}
+        userId={mongoUser._id}
+        totalAnswers={result.answers.length}
+      />
+
+      <Answer
+        question={result.content}
+        questionId={JSON.stringify(result._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   );
 }
