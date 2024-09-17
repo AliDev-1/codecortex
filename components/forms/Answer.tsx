@@ -41,6 +41,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   });
     
     const generateAIAnswer = () => {
+    setIsSubmittingAI(true);
        
     }
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
