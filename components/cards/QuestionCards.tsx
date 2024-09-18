@@ -9,7 +9,7 @@ interface QuestionProps {
   title: string;
   tags: { name: string; _id: string }[];
   author: { name: string; _id: string; picture: string };
-  upvotes: number;
+  upvotes: string[];
   views: number;
   answers: Array<object>;
   createdAt: Date;
@@ -63,7 +63,7 @@ const QuestionCards = ({
         <Metric
           imgUrl="/assets/icons/like.svg"
           alt="Upvotes"
-          value={formatAndDivideNumber(upvotes)}
+          value={formatAndDivideNumber(upvotes.length)}
           title="Upvotes"
           textStyles="small-medium text-dark400_light800"
           isAuthor={false}
