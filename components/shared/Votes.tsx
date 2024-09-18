@@ -11,8 +11,8 @@ import { formatAndDivideNumber } from "@/lib/utils";
 
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
-import React from "react";
+import React, { useEffect } from "react";
+
 
 interface Props {
   type: string;
@@ -49,7 +49,7 @@ const Votes = ({
   const handleVote = async (action: string) => {
     console.log("Voting...");
     if (!userId) {
-      return;
+      return Promise.resolve();
     }
 
     if (action === "upvote") {
