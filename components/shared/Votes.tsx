@@ -73,7 +73,7 @@ const Votes = ({
         });
       }
       // TODO: Implement toast or feedback after voting
-      return;
+ 
     }
 
     if (action === "downvote") {
@@ -97,7 +97,7 @@ const Votes = ({
         });
       }
       // TODO: Implement toast or feedback after voting
-      return;
+  
     }
   };
 
