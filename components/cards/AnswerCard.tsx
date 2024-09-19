@@ -29,7 +29,7 @@ const AnswerCard = ({
   upvotes,
   createdAt,
 }: Props) => {
-  const showActionButtons = clerkId && clerkId === author.clerkId;
+//   const showActionButtons = clerkId && clerkId === author.clerkId;
 
   return (
     <Link

@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 import { FilterQuery } from "mongoose";
 import Tag from "@/database/tag.model";
-import { BadgeCriteriaType } from "@/types";
+// import { BadgeCriteriaType } from "@/types";
 import Answer from "@/database/answer.model";
 
 
@@ -225,47 +225,47 @@ export async function getUserInfo(params: GetUserByIdParams) {
     const totalQuestions = await Question.countDocuments({ author: user._id });
     const totalAnswers = await Answer.countDocuments({ author: user._id });
 
-    const [questionUpvotes] = await Question.aggregate([
-      { $match: { author: user._id } },
-      {
-        $project: {
-          _id: 0,
-          upvotes: { $size: "$upvotes" },
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          totalUpvotes: { $sum: "$upvotes" },
-        },
-      },
-    ]);
+    // const [questionUpvotes] = await Question.aggregate([
+    //   { $match: { author: user._id } },
+    //   {
+    //     $project: {
+    //       _id: 0,
+    //       upvotes: { $size: "$upvotes" },
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: null,
+    //       totalUpvotes: { $sum: "$upvotes" },
+    //     },
+    //   },
+    // ]);
 
-    const [answerUpvotes] = await Answer.aggregate([
-      { $match: { author: user._id } },
-      {
-        $project: {
-          _id: 0,
-          upvotes: { $size: "$upvotes" },
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          totalUpvotes: { $sum: "$upvotes" },
-        },
-      },
-    ]);
+    // const [answerUpvotes] = await Answer.aggregate([
+    //   { $match: { author: user._id } },
+    //   {
+    //     $project: {
+    //       _id: 0,
+    //       upvotes: { $size: "$upvotes" },
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: null,
+    //       totalUpvotes: { $sum: "$upvotes" },
+    //     },
+    //   },
+    // ]);
 
-    const [questionViews] = await Answer.aggregate([
-      { $match: { author: user._id } },
-      {
-        $group: {
-          _id: null,
-          totalViews: { $sum: "$views" },
-        },
-      },
-    ]);
+    // const [questionViews] = await Answer.aggregate([
+    //   { $match: { author: user._id } },
+    //   {
+    //     $group: {
+    //       _id: null,
+    //       totalViews: { $sum: "$views" },
+    //     },
+    //   },
+    // ]);
 
 
     return {
