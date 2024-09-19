@@ -52,7 +52,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
       </div>
 
       <div className="mt-10">
-     // TODO Pagination
+     {/* TODO PAGINATION */}
       </div>
     </>
   );
