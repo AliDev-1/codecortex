@@ -72,7 +72,7 @@ const Question = ({ mongoUserId }: Props) => {
     catch (error) {
 
     }
-    console.log(values);
+  
   }
 
   // 3. Handle the keydown event for the tags input field
