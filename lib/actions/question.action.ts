@@ -40,6 +40,21 @@ export async function getQuestions(params: GetQuestionsParams) {
       ];
     }
 
+      let sortOptions = {};
+
+      switch (filter) {
+        case "newest":
+          sortOptions = { createdAt: -1 };
+          break;
+        case "frequent":
+          sortOptions = { views: -1 };
+          break;
+        case "unanswered":
+          query.answers = { $size: 0 };
+          break;
+        default:
+          break;
+      }
     
 
     const questions = await Question.find(query)
@@ -47,7 +62,7 @@ export async function getQuestions(params: GetQuestionsParams) {
       .populate({ path: "author", model: User })
       .skip(skipAmount)
       .limit(pageSize)
-      .sort({ createdAt: -1 });
+      .sort(sortOptions);
     const totalQuestions = await Question.countDocuments(query);
 
     const isNext = totalQuestions > skipAmount + questions.length;
