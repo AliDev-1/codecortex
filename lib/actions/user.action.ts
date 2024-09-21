@@ -95,12 +95,37 @@ export async function deleteUser(params: DeleteUserParams) {
 }
 
 export async function getAllUsers(params: GetAllUsersParams) {
-  try { 
+  try {
     connectToDatabase();
-    const users = await User.find({}).sort({ createdAt: -1 });
-    return {users};
-  }
-  catch (error){
+
+    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
+    const skipAmount = (page - 1) * pageSize;
+
+    const query: FilterQuery<typeof User> = {};
+
+    if (searchQuery) {
+      const escapedSearchQuery = searchQuery.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+      );
+      query.$or = [
+        { name: { $regex: new RegExp(escapedSearchQuery, "i") } },
+        { username: { $regex: new RegExp(escapedSearchQuery, "i") } },
+      ];
+    }
+
+
+
+    const users = await User.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skipAmount)
+      .limit(pageSize);
+
+    const totalUsers = await User.countDocuments(query);
+    const isNext = totalUsers > skipAmount + users.length;
+
+    return { users, isNext };
+  } catch (error) {
     console.log(error);
     throw error;
   }

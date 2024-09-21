@@ -15,31 +15,55 @@ import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 import Interaction from "@/database/interaction.model";
 import Answer from "@/database/answer.model";
+import { FilterQuery } from "mongoose";
+
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
-    const questions = await Question.find({})
-      .populate({ path: "tags", model: Tag })
-      .populate({
-        path: "author",
-        model: User,
-      })
-      .sort({ createdAt: -1 }); // sort by latest
+    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
 
-    return { questions };
+    // Calculcate the number of posts to skip based on the page number and page size
+    const skipAmount = (page - 1) * pageSize;
+
+    const query: FilterQuery<typeof Question> = {};
+
+    if (searchQuery) {
+      const escapedSearchQuery = searchQuery.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+      );
+      query.$or = [
+        { title: { $regex: new RegExp(escapedSearchQuery, "i") } },
+        { content: { $regex: new RegExp(escapedSearchQuery, "i") } },
+      ];
+    }
+
+    
+
+    const questions = await Question.find(query)
+      .populate({ path: "tags", model: Tag })
+      .populate({ path: "author", model: User })
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort({ createdAt: -1 });
+    const totalQuestions = await Question.countDocuments(query);
+
+    const isNext = totalQuestions > skipAmount + questions.length;
+
+    return { questions, isNext };
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
 
+
 export async function createQuestion(params: CreateQuestionParams) {
   try {
     connectToDatabase();
     const { title, content, tags, author, path } = params;
-
     // create question
     const question = await Question.create({
       title,
@@ -230,5 +254,21 @@ export async function editQuestion(params: EditQuestionParams) {
     revalidatePath(path);
   } catch (error) {
     console.log(error);
+  }
+}
+
+
+export async function getHotQuestions() {
+  try {
+    connectToDatabase();
+
+    const hotQuestions = await Question.find({})
+      .sort({ views: -1, upvotes: -1 })
+      .limit(5);
+
+    return hotQuestions;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }

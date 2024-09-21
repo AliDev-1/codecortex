@@ -32,19 +32,38 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 }
 
 export async function getAllTags(params: GetAllTagsParams) {
-    try {
-        connectToDatabase();
-            
-            const tags = await Tag.find({});
-    
-            return {tags};
-        
-     }
+  try {
+    connectToDatabase();
 
-    catch (error) {
-        console.log(error);
-        throw error;
+    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
+    const skipAmount = (page - 1) * pageSize;
+
+    const query: FilterQuery<typeof Tag> = {};
+
+    if (searchQuery) {
+      const escapedSearchQuery = searchQuery.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+      );
+      query.$or = [{ name: { $regex: new RegExp(escapedSearchQuery, "i") } }];
     }
+
+  
+
+    const totalTags = await Tag.countDocuments(query);
+
+    const tags = await Tag.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skipAmount)
+      .limit(pageSize);
+
+    const isNext = totalTags > skipAmount + tags.length;
+
+    return { tags, isNext };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
 
 export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
@@ -87,3 +106,23 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
     throw error;
   }
 }
+
+
+export async function getTopPopularTags() {
+  try {
+    connectToDatabase();
+
+    const popularTags = await Tag.aggregate([
+      { $project: { name: 1, numberOfQuestions: { $size: "$questions" } } },
+      { $sort: { numberOfQuestions: -1 } },
+      { $limit: 5 },
+    ]);
+
+    return popularTags;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+

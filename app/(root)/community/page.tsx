@@ -5,9 +5,20 @@ import { UserFilters } from "@/constants/filters";
 import { getAllUsers } from "@/lib/actions/user.action";
 import Link from "next/link";
 import React from "react";
+import { SearchParamsProps } from "@/types";
+import dynamic from "next/dynamic";
 
-const Page = async () => {
-  const result = await getAllUsers({});
+
+const Page = async ({ searchParams }: SearchParamsProps) => {
+  const result = await getAllUsers({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
+  });
+
+    const UserCard = dynamic(() => import("@/components/cards/UserCard"), {
+      ssr: false,
+    });
 
   return (
     <>
