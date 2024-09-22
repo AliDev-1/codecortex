@@ -7,6 +7,7 @@ import Image from "next/image";
 import { getTimestamp } from "@/lib/utils";
 import ParseHTML from "./ParseHTML";
 import Votes from "./Votes";
+import Pagination from "./Pagination";
 
 
 interface Props {
@@ -62,7 +63,7 @@ const AllAnswers = async ({
                     </p>
 
                     <p className="small-regular text-light400_light500 ml-0.5 mt-0.5 line-clamp-1">
-                      answered {" "} {getTimestamp(answer.createdAt)}
+                      answered {getTimestamp(answer.createdAt)}
                     </p>
                   </div>
                 </Link>
@@ -84,9 +85,13 @@ const AllAnswers = async ({
         </div>
 
         <div className="mt-10 w-full">
+          <Pagination
+            pageNumber={page ? +page : 1}
+            isNext={result.isNextAnswer}
+          />
         </div>
       </div>
     );
 };
 
-export default AllAnswers;
+export default AllAnswers; 

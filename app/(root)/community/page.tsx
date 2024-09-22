@@ -7,6 +7,7 @@ import Link from "next/link";
 import React from "react";
 import { SearchParamsProps } from "@/types";
 import dynamic from "next/dynamic";
+import Pagination from "@/components/shared/Pagination";
 
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
@@ -51,6 +52,12 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
           </div>
         )}
       </section>
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
+      </div>
     </>
   );
 };

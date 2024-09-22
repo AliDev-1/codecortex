@@ -1,5 +1,6 @@
 import QuestionCard from "@/components/cards/QuestionCards";
 import NoResult from "@/components/shared/NoResults";
+import Pagination from "@/components/shared/Pagination";
 
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { getQuestionsByTagId } from "@/lib/actions/tag.actions";
@@ -52,7 +53,10 @@ const Page = async ({ params, searchParams }: URLProps) => {
       </div>
 
       <div className="mt-10">
-     {/* TODO PAGINATION */}
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
       </div>
     </>
   );

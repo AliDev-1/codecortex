@@ -9,6 +9,7 @@ import NoResults from '@/components/shared/NoResults';
 import QuestionCards from '@/components/cards/QuestionCards';
 import { getQuestions } from '@/lib/actions/question.action';
 import { SearchParamsProps } from '@/types';
+import Pagination from '@/components/shared/Pagination';
 
 
 
@@ -75,6 +76,12 @@ export default async function Home({ searchParams }: SearchParamsProps) {
             />
           )}
         </div>
+      </div>
+      <div className='mt-10'>
+      <Pagination
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={result.isNext}
+      />
       </div>
     </>
   );
