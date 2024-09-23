@@ -17,7 +17,6 @@ import Interaction from "@/database/interaction.model";
 import Answer from "@/database/answer.model";
 import { FilterQuery } from "mongoose";
 
-
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
@@ -40,22 +39,21 @@ export async function getQuestions(params: GetQuestionsParams) {
       ];
     }
 
-      let sortOptions = {};
+    let sortOptions = {};
 
-      switch (filter) {
-        case "newest":
-          sortOptions = { createdAt: -1 };
-          break;
-        case "frequent":
-          sortOptions = { views: -1 };
-          break;
-        case "unanswered":
-          query.answers = { $size: 0 };
-          break;
-        default:
-          break;
-      }
-    
+    switch (filter) {
+      case "newest":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "frequent":
+        sortOptions = { views: -1 };
+        break;
+      case "unanswered":
+        query.answers = { $size: 0 };
+        break;
+      default:
+        break;
+    }
 
     const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
@@ -73,7 +71,6 @@ export async function getQuestions(params: GetQuestionsParams) {
     throw error;
   }
 }
-
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
@@ -108,9 +105,14 @@ export async function createQuestion(params: CreateQuestionParams) {
     });
 
     // Create an interaction to track the user's ask question action
-
+    await Interaction.create({
+      user: author,
+      action: "ask_question",
+      question: question._id,
+      tags: tagDocuments,
+    });
     // Increment author's reputation by 5
-
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
     // Increment tag's question count
     revalidatePath(path);
   } catch (error) {
@@ -227,7 +229,6 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
   }
 }
 
-
 export async function deleteQuestion(params: DeleteQuestionParams) {
   try {
     connectToDatabase();
@@ -247,7 +248,6 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
     console.log(error);
   }
 }
-
 
 export async function editQuestion(params: EditQuestionParams) {
   try {
@@ -271,7 +271,6 @@ export async function editQuestion(params: EditQuestionParams) {
     console.log(error);
   }
 }
-
 
 export async function getHotQuestions() {
   try {
