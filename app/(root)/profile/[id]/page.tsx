@@ -13,6 +13,14 @@ import ProfileLink from "@/components/shared/ProfileLink";
 import Stats from "@/components/shared/Stats";
 import QuestionTab from "@/components/shared/QuestionTab";
 import AnswersTab from "@/components/shared/AnswerTab";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile | CodeCortex",
+  description:
+    "CodeCortex is a platform for developers to ask questions, share knowledge, and learn from each other.",
+};
+
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();

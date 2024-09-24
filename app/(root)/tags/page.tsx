@@ -7,6 +7,14 @@ import { getAllTags } from '@/lib/actions/tag.actions';
 import { SearchParamsProps } from '@/types';
 import Link from 'next/link';
 import React from 'react'
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tags | CodeCortex",
+  description:
+    "CodeCortex is a platform for developers to ask questions, share knowledge, and learn from each other.",
+};
+
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({

@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "@/hooks/use-toast";
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.actions";
 import { viewQuestion } from "@/lib/actions/interaction.action";
 import {
@@ -12,6 +13,8 @@ import { formatAndDivideNumber } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+
+
 
 
 interface Props {
@@ -44,12 +47,21 @@ const Votes = ({
       questionId: JSON.parse(itemId),
       path: pathname,
     });
+
+    return toast({
+      title: `Question ${!hasSaved ? "Saved in" : "Removed from"} your collection`,
+      variant: !hasSaved ? "default" : "destructive",
+    });
+
   }
 
   const handleVote = async (action: string) => {
     console.log("Voting...");
     if (!userId) {
-      return Promise.resolve();
+       return toast({
+         title: "Please log in",
+         description: "You must be logged in to perform this action",
+       });
     }
 
     if (action === "upvote") {
@@ -73,6 +85,11 @@ const Votes = ({
         });
       }
       // TODO: Implement toast or feedback after voting
+
+       return toast({
+         title: `Upvote ${!hasupVoted ? "Successful" : "Removed"}`,
+         variant: !hasupVoted ? "default" : "destructive",
+       });
  
     }
 
@@ -98,6 +115,12 @@ const Votes = ({
       }
       // TODO: Implement toast or feedback after voting
   
+           return toast({
+             title: `Downvote ${!hasupVoted ? "Successful" : "Removed"}`,
+             variant: !hasupVoted ? "default" : "destructive",
+           });
+
+
     }
   };
 

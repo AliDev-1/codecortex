@@ -7,6 +7,14 @@ import { QuestionFilters } from "@/constants/filters";
 import { getSavedQuestions } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Collection | CodeCortex",
+  description:
+    "CodeCortex is a platform for developers to ask questions, share knowledge, and learn from each other.",
+};
+
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();

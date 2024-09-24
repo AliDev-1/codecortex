@@ -1,4 +1,3 @@
-import UserCard from "@/components/cards/UserCard";
 import Filter from "@/components/shared/Filter";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { UserFilters } from "@/constants/filters";
@@ -8,6 +7,13 @@ import React from "react";
 import { SearchParamsProps } from "@/types";
 import dynamic from "next/dynamic";
 import Pagination from "@/components/shared/Pagination";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Community | CodeCortex",
+  description:
+    "CodeCortex is a platform for developers to ask questions, share knowledge, and learn from each other.",
+};
 
 
 const Page = async ({ searchParams }: SearchParamsProps) => {

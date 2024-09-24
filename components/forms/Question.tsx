@@ -53,9 +53,6 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   // 2. Defining a submit handler.
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
-
-    {/* 3. Checking if we're creating/editing question */}
-
     try {
       if (type === "Edit") {
         await editQuestion({
