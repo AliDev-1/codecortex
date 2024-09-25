@@ -10,7 +10,7 @@
   <img src="https://s11.gifyu.com/images/SA4dp.gif" alt="CodeCortex GIF" />
 </p>
 
-![CodeCortex Gif](https://s11.gifyu.com/images/SA4dp.gif)
+![CodeCortex Gif](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWNsODNmNXl4dDU2MGhjMnRsemFiZXh2MHRjZGJteDNjcmF2OWtwcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IVdAx1tT2wMw8cN6LA/giphy.gif)
 
 ## Application Overview
 
